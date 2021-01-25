@@ -21,3 +21,7 @@ class Config:
             users.append(user)
 
         return users
+
+    @property
+    def user_count(self) -> int:
+        return len(self.load_users())

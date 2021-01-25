@@ -2,12 +2,13 @@ from loguru import logger
 from requests_html import HTMLSession
 
 
-class CT8_manager:
-    def __init__(self, username, password):
+class CT8:
+    def __init__(self, username, password, progress_console=None):
         self.username = username
         self.password = password
         self.signed_in = False
         self.session = HTMLSession()
+        self._console = progress_console
 
         self.sign_in()
 
@@ -49,8 +50,12 @@ class CT8_manager:
         if len(r.history) and r.history[0].status_code == 302:
             self.signed_in = True
             logger.debug('Signed in as {}', self.username)
+            if self._console:
+                self._console.print(f':white_check_mark: Signed in as {self.username}')
         else:
-            logger.error('Login failed for {}', self.username)
+            logger.error('Login failed for {}. Check the login credentials and try again.', self.username)
+            if self._console:
+                self._console.print(f':x: Login failed for {self.username}. Check the login credentials and try again.')
 
     def get_expiry_date(self):
         if not self.signed_in:
