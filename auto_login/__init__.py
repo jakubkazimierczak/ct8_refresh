@@ -53,10 +53,10 @@ def _real_main():
 
     if args.enable_account:
         for account in args.enable_account:
-            manager.enable(account)
+            manager.set_active(account, True)
     if args.disable_account:
         for account in args.disable_account:
-            manager.disable(account)
+            manager.set_active(account, False)
 
 
 @logger.catch(exclude=(OperationalError, IntegrityError))

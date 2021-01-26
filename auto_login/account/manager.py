@@ -44,29 +44,18 @@ class AccountsManager:
             console.print(f'Failed to remove user: {err}', style='bold red')
 
     @staticmethod
-    def _set_account_status(account_name, value=True):
-        Account\
-            .update({Account.is_active: value})\
-            .where(Account.name == account_name)\
-            .execute()
+    def set_active(account_name, value: bool):
+        operation = 'enable' if value else 'disable'
 
-    @staticmethod
-    def enable(account_name):
         try:
-            AccountsManager._set_account_status(account_name, True)
-            print_success('Account enabled. Automatic sign-in will be performed on future runs.')
+            Account \
+                .update({Account.is_active: value}) \
+                .where(Account.name == account_name) \
+                .execute()
+            print_success(f'Account {operation}d. Automatic sign-in will be performed on future runs.')
         except (OperationalError, IntegrityError) as err:
             logger.error(err)
-            console.print(f"Failed to enable account: {err}", style='bold red')
-
-    @staticmethod
-    def disable(account_name):
-        try:
-            AccountsManager._set_account_status(account_name, False)
-            print_success("Account disabled. Automatic sign-in won't be performed on future runs.")
-        except (OperationalError, IntegrityError) as err:
-            logger.error(err)
-            console.print(f"Failed to disable account: {err}", style='bold red')
+            console.print(f'Failed to {operation} account: {err}', style='bold red')
 
     @staticmethod
     def get_all_accounts():
