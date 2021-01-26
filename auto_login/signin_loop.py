@@ -17,7 +17,7 @@ progress = Progress(
 
 
 @logger.catch
-def app():
+def signin_loop():
     with progress:
         users = AccountsManager.get_active_accounts()
         task_id = progress.add_task('signin_check', total=len(users))

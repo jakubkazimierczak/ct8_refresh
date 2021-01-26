@@ -1,7 +1,7 @@
 import argparse
 import os
 from auto_login.account.manager import AccountsManager
-from auto_login.app import app
+from auto_login.signin_loop import signin_loop
 
 
 parser = argparse.ArgumentParser()
