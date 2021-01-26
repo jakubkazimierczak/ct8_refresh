@@ -18,29 +18,29 @@ parser.add_argument(
 # -----------------------------------------------
 # Users parser
 # -----------------------------------------------
-users_parser = subparsers.add_parser('user', help='Manage user account(s)')
-parser.add_argument(
+user_parser = subparsers.add_parser('user', help='Manage user account(s)')
+user_parser.add_argument(
     '-a', '--add-account',
     action='store',
     nargs='+',
     help='add account to DB',
     metavar='login',
 )
-parser.add_argument(
+user_parser.add_argument(
     '--del-account',
     action='store',
     nargs='+',
     help='delete account from DB',
     metavar='login',
 )
-parser.add_argument(
+user_parser.add_argument(
     '-e', '--enable-account',
     action='store',
     nargs='+',
     help='enable account to automatic sign-in',
     metavar='login',
 )
-parser.add_argument(
+user_parser.add_argument(
     '-d', '--disable-account',
     action='store',
     nargs='+',
