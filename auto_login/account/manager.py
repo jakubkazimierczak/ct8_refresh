@@ -52,7 +52,7 @@ class AccountsManager:
                 .update({Account.is_active: value}) \
                 .where(Account.name == account_name) \
                 .execute()
-            print_success(f'Account {operation}d. Automatic sign-in will be performed on future runs.')
+            print_success(f'Account {operation}d (automatic sign-in {operation}d).')
         except (OperationalError, IntegrityError) as err:
             logger.error(err)
             console.print(f'Failed to {operation} account: {err}', style='bold red')
