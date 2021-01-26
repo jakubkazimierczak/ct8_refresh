@@ -51,26 +51,26 @@ class CT8:
             self.signed_in = True
             logger.debug('Signed in as {}', self.username)
             if self._console:
-                self._console.print(f':white_check_mark: Signed in as {self.username}')
+                self._console.print(f':heavy_check_mark: Signed in as {self.username}')
         else:
             logger.error('Login failed for {}. Check the login credentials and try again.', self.username)
             if self._console:
                 self._console.print(f':x: Login failed for {self.username}. Check the login credentials and try again.')
 
-    def get_expiry_date(self):
+    def get_expiration_date(self):
         if not self.signed_in:
             logger.error('User must be signed in to perform this action')
             return
 
-        # Get expiry info
+        # Get account expiration date
         r = self.session.get('https://panel.ct8.pl/dashboard')
         if r.status_code == 200:
             if 'Konto ważne do' in r.text or 'Expiration date' in r.text:
-                expiry = r.html.find('.well', first=True).text.split('\n')[-1]
+                expires_on = r.html.find('.well', first=True).text.split('\n')[-1]
 
-                logger.debug('Expiry info found on page')
-                logger.info('{} expires on {}', self.username, expiry)
+                logger.debug('Expiration date found on page')
+                logger.info('{} expires on {}', self.username, expires_on)
 
-                return expiry
+                return expires_on
         else:
             logger.error('Could not query account info')
