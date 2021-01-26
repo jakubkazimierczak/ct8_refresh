@@ -2,11 +2,23 @@ import argparse
 
 
 parser = argparse.ArgumentParser()
+subparsers = parser.add_subparsers()
+
+
+# -----------------------------------------------
+# Main parser
+# -----------------------------------------------
 parser.add_argument(
     '--debug',
     action='store_true',
     help='Toggle debug mode on.'
 )
+
+
+# -----------------------------------------------
+# Users parser
+# -----------------------------------------------
+users_parser = subparsers.add_parser('user', help='Manage user account(s)')
 parser.add_argument(
     '-a', '--add-account',
     action='store',
@@ -35,9 +47,18 @@ parser.add_argument(
     help='Disable account from automatic sign-in.',
     metavar='login',
 )
-parser.add_argument(
-    '-r', '--run',
+
+
+# -----------------------------------------------
+# Run parser
+# -----------------------------------------------
+run_parser = subparsers.add_parser('run', help='Run automatic sign-in')
+run_parser.add_argument(
+    '--all',
     action='store_true',
-    help='Sign-in to enabled accounts.'
+    default=False,
+    help='try sign-in to all (even disabled) accounts'
 )
+
+
 args = parser.parse_args()
