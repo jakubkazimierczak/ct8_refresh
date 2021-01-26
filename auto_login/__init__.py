@@ -1,4 +1,5 @@
 import os
+import sys
 from peewee import OperationalError, IntegrityError
 from rich.console import Console
 from auto_login.cli import args
@@ -63,4 +64,4 @@ def main():
     try:
         from auto_login import __main__
     except KeyboardInterrupt:
-        pass
+        sys.exit('\nInterrupted by user.')
