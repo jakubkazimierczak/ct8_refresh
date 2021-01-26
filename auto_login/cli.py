@@ -1,7 +1,4 @@
 import argparse
-import os
-from auto_login.account.manager import AccountsManager
-from auto_login.signin_loop import signin_loop
 
 
 parser = argparse.ArgumentParser()
@@ -44,25 +41,3 @@ parser.add_argument(
     help='Sign-in to enabled accounts.'
 )
 args = parser.parse_args()
-
-
-manager = AccountsManager()
-if args.debug:
-    os.environ['MODE'] = 'DEBUG'
-
-if args.run:
-    app()
-
-if args.add_account:
-    for account in args.add_account:
-        manager.add(account)
-if args.del_account:
-    for account in args.del_account:
-        manager.delete(account)
-
-if args.enable_account:
-    for account in args.enable_account:
-        manager.enable(account)
-if args.disable_account:
-    for account in args.disable_account:
-        manager.disable(account)
