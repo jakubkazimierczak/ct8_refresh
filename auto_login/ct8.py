@@ -1,5 +1,7 @@
 from loguru import logger
 from requests_html import HTMLSession
+from auto_login.account.manager import AccountsManager
+from datetime import datetime, timedelta
 
 
 class CT8:
@@ -47,9 +49,13 @@ class CT8:
 
         # Sign-in
         r = self.session.post(url, data=login_data, headers=headers)
+
+        # Successful sign-in
         if len(r.history) and r.history[0].status_code == 302:
             self.signed_in = True
             logger.debug('Signed in as {}', self.username)
+            expires_on = datetime.today() + timedelta(days=90)
+            AccountsManager.update_expiration_date(self.username, expires_on)
             if self._console:
                 self._console.print(f':heavy_check_mark: Signed in as {self.username}')
         else:

@@ -58,6 +58,18 @@ class AccountsManager:
             console.print(f'Failed to {operation} account: {err}', style='bold red')
 
     @staticmethod
+    def update_expiration_date(account_name, date):
+        try:
+            Account \
+                .update({Account.expires_on: date}) \
+                .where(Account.name == account_name) \
+                .execute()
+            # print_success(f'Account {operation}d (automatic sign-in {operation}d).')
+        except (OperationalError, IntegrityError) as err:
+            logger.error(err)
+            # console.print(f'Failed to {operation} account: {err}', style='bold red')
+
+    @staticmethod
     def get_all_accounts():
         return Account.select()
 
