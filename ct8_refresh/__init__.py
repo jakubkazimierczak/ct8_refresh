@@ -2,6 +2,7 @@ __version__ = '0.1.0'
 
 import os
 import sys
+import textwrap
 from pathlib import Path
 
 from peewee import OperationalError, IntegrityError
@@ -12,7 +13,10 @@ from ct8_refresh.cli import args
 # Paths
 root_path = Path(__file__).parent.parent
 database_path = root_path / 'accounts.db'
-logfile_path = root_path / 'run.log'
+if args.debug:
+    logfile_path = root_path / 'debug.log'
+else:
+    logfile_path = root_path / 'run.log'
 
 
 # Loguru and console initialization
@@ -51,6 +55,14 @@ from ct8_refresh.signin_loop import signin_loop
 def handle_args():
     logger.debug(args)
     manager = AccountsManager()
+
+    if args.debug_paths:
+        print(textwrap.dedent(f'''
+                File location:
+                    - DB:\t{database_path}
+                    - Log:\t{logfile_path}
+                BEWARE! Never share your DB file, even when submitting an issue!
+            '''))
 
     if args.command == 'run':
         if args.all or not args.all:

@@ -17,6 +17,11 @@ parser.add_argument(
     action='store_true',
     help='toggle debug mode on'
 )
+parser.add_argument(
+    '--debug-paths',
+    action='store_true',
+    help='show path where debug information is stored'
+)
 
 
 # -----------------------------------------------
