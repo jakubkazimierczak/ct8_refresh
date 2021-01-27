@@ -47,6 +47,12 @@ user_parser.add_argument(
     help='disable account from automatic sign-in',
     metavar='login',
 )
+user_parser.add_argument(
+    '-s', '--show-accounts',
+    action='store_true',
+    # default=False,
+    help='show accounts stored in DB',
+)
 
 
 # -----------------------------------------------

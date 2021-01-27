@@ -31,8 +31,12 @@ logger_config = {
     ]
 }
 logger.configure(**logger_config)
-
 console = Console()
+
+
+from auto_login.account.manager import AccountsManager
+from auto_login.account.views import AccountsView
+from auto_login.signin_loop import signin_loop
 
 
 def _real_main():
@@ -41,7 +45,7 @@ def _real_main():
     if args.debug:
         os.environ['MODE'] = 'DEBUG'
 
-    if args.run:
+    if args.all:
         signin_loop()
 
     if args.add_account:
@@ -58,10 +62,13 @@ def _real_main():
         for account in args.disable_account:
             manager.set_active(account, False)
 
+    if args.show_accounts:
+        AccountsView.show_accounts()
+
 
 @logger.catch(exclude=(OperationalError, IntegrityError))
 def main():
     try:
-        from auto_login import __main__
+        _real_main()
     except KeyboardInterrupt:
         sys.exit('\nInterrupted by user.')
