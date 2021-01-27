@@ -3,8 +3,7 @@ import sys
 from peewee import OperationalError, IntegrityError
 from rich.console import Console
 from auto_login.cli import args
-from auto_login.account.manager import AccountsManager
-from auto_login.signin_loop import signin_loop
+
 
 # Loguru and console initialization
 mode = os.environ.get('MODE')
@@ -40,30 +39,35 @@ from auto_login.signin_loop import signin_loop
 
 
 def _real_main():
+    # print(args)
     manager = AccountsManager()
 
     if args.debug:
         os.environ['MODE'] = 'DEBUG'
 
-    if args.all:
-        signin_loop()
+    if args.command == 'run':
+        if not args.all:
+            signin_loop()
+        else:
+            raise NotImplementedError('Signing-in to all account is not implemented yet.')
 
-    if args.add_account:
-        for account in args.add_account:
-            manager.add(account)
-    if args.del_account:
-        for account in args.del_account:
-            manager.delete(account)
+    if args.command == 'user':
+        if args.add:
+            for account in args.add:
+                manager.add(account)
+        if args.delete:
+            for account in args.delete:
+                manager.delete(account)
 
-    if args.enable_account:
-        for account in args.enable_account:
-            manager.set_active(account, True)
-    if args.disable_account:
-        for account in args.disable_account:
-            manager.set_active(account, False)
+        if args.enable_account:
+            for account in args.enable_account:
+                manager.set_active(account, True)
+        if args.disable_account:
+            for account in args.disable_account:
+                manager.set_active(account, False)
 
-    if args.show_accounts:
-        AccountsView.show_accounts()
+        if args.show_accounts:
+            AccountsView.show_accounts()
 
 
 @logger.catch(exclude=(OperationalError, IntegrityError))
