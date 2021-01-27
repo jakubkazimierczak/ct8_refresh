@@ -1,6 +1,7 @@
 from ct8_refresh.account.model import Account
 from ct8_refresh.account.manager import AccountsManager
 from ct8_refresh.ct8 import CT8
+import sys
 from loguru import logger
 from rich.progress import (
     BarColumn,
@@ -19,6 +20,9 @@ progress = Progress(
 def signin_loop():
     with progress:
         users = AccountsManager.get_active_accounts()
+        if not users:
+            sys.exit('No active users found. Please configure your users first.')
+
         task_id = progress.add_task('signin_check', total=len(users))
         progress.start_task(task_id)
 
@@ -27,8 +31,6 @@ def signin_loop():
             progress.update(task_id, description=f'{user.name}: sign-in...')
 
             ct8 = CT8(user.name, user.password, progress.console)
-            if ct8.signed_in:
-                ct8.get_expiration_date()
 
             progress.advance(task_id)
 
