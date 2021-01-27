@@ -33,6 +33,7 @@ logger_config = {
         {
             'sink': logfile_path,
             'format': '{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {line} | {name}:{function} | {message}',
+            'retention': '2 days'
         },
         {
             'sink': sys.stderr,
@@ -45,6 +46,7 @@ logger_config = {
     ]
 }
 logger.configure(**logger_config)
+logger.debug(args)
 console = Console()
 
 from ct8_refresh.account.manager import AccountsManager
@@ -53,7 +55,6 @@ from ct8_refresh.signin_loop import signin_loop
 
 
 def handle_args():
-    logger.debug(args)
     manager = AccountsManager()
 
     if args.debug_paths:

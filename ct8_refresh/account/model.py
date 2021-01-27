@@ -1,3 +1,7 @@
+from loguru import logger
+
+from ct8_refresh import database_path
+
 from peewee import (
     Model,
     SqliteDatabase,
@@ -8,7 +12,8 @@ from peewee import (
 )
 
 
-database = SqliteDatabase('accounts.db')
+logger.debug('Database path: {}'.format(database_path))
+database = SqliteDatabase(database_path)
 
 
 class Account(Model):
