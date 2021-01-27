@@ -7,7 +7,6 @@ from peewee import (
     SqliteDatabase,
     BooleanField,
     CharField,
-    # DateField,
     DateTimeField,
 )
 
