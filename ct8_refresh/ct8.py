@@ -59,7 +59,7 @@ class CT8:
             if self._console:
                 self._console.print(f':heavy_check_mark: Signed in as {self.username}')
         else:
-            logger.error('Login failed for {}. Check the login credentials and try again.', self.username)
+            logger.warning('Login failed for {}. Check the login credentials and try again.', self.username)
             if self._console:
                 self._console.print(f':x: Login failed for {self.username}. Check the login credentials and try again.')
 
@@ -79,4 +79,4 @@ class CT8:
 
                 return expires_on
         else:
-            logger.error('Could not query account info')
+            logger.warning('Could not query account info')
