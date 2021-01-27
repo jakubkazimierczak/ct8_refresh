@@ -1,4 +1,3 @@
-from ct8_refresh.config import Config
 from ct8_refresh.account.model import Account
 from ct8_refresh.account.manager import AccountsManager
 from ct8_refresh.ct8 import CT8
