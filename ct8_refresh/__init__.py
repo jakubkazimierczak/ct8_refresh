@@ -2,7 +2,7 @@ import os
 import sys
 from peewee import OperationalError, IntegrityError
 from rich.console import Console
-from auto_login.cli import args
+from ct8_refresh.cli import args
 
 
 # Loguru and console initialization
@@ -33,9 +33,9 @@ logger.configure(**logger_config)
 console = Console()
 
 
-from auto_login.account.manager import AccountsManager
-from auto_login.account.views import AccountsView
-from auto_login.signin_loop import signin_loop
+from ct8_refresh.account.manager import AccountsManager
+from ct8_refresh.account.views import AccountsView
+from ct8_refresh.signin_loop import signin_loop
 
 
 def _real_main():

@@ -1,8 +1,8 @@
 from rich.prompt import Prompt
-from auto_login import console
+from ct8_refresh import console
 from loguru import logger
 from peewee import OperationalError, IntegrityError
-from auto_login.account.model import Account
+from ct8_refresh.account.model import Account
 from functools import partial
 
 

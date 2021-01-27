@@ -1,6 +1,6 @@
 from loguru import logger
 from requests_html import HTMLSession
-from auto_login.account.manager import AccountsManager
+from ct8_refresh.account.manager import AccountsManager
 from datetime import datetime, timedelta
 
 

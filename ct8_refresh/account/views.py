@@ -1,6 +1,6 @@
-from auto_login.account.model import Account
-from auto_login.account.manager import AccountsManager
-from auto_login import console
+from ct8_refresh.account.model import Account
+from ct8_refresh.account.manager import AccountsManager
+from ct8_refresh import console
 from rich.table import Table
 from datetime import datetime
 

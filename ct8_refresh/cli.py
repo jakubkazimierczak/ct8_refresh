@@ -3,7 +3,7 @@ import textwrap
 
 
 parser = argparse.ArgumentParser(
-    prog='auto_login',
+    prog='ct8_refresh',
     usage='%(prog)s [options]'
 )
 subparsers = parser.add_subparsers(dest='command')

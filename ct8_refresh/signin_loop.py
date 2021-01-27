@@ -1,7 +1,7 @@
-from auto_login.config import Config
-from auto_login.account.model import Account
-from auto_login.account.manager import AccountsManager
-from auto_login.ct8 import CT8
+from ct8_refresh.config import Config
+from ct8_refresh.account.model import Account
+from ct8_refresh.account.manager import AccountsManager
+from ct8_refresh.ct8 import CT8
 from loguru import logger
 from rich.progress import (
     BarColumn,
