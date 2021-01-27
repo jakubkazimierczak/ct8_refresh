@@ -6,8 +6,7 @@ from auto_login.cli import args
 from auto_login.account.manager import AccountsManager
 from auto_login.signin_loop import signin_loop
 
-
-# Loguru configuration
+# Loguru and console initialization
 mode = os.environ.get('MODE')
 if mode == 'DEBUG':
     os.environ['LOGURU_LEVEL'] = 'DEBUG'
@@ -19,15 +18,16 @@ logger_config = {
     'handlers': [
         {
             'sink': 'run.log',
-            'format': '{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {line} | {name}:{function} | {message}'
+            'format': '{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {line} | {name}:{function} | {message}',
         },
-        # {
-        #     'sink': sys.stderr,
-        #     'format':   "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | "
-        #                 "<level>{level: <8}</level> | "
-        #                 "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
-        #     'diagnose': False
-        # }
+        {
+            'sink': sys.stderr,
+            'format':   "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | "
+                        "<level>{level: <8}</level> | "
+                        "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+            'diagnose': False,
+            'level': 'ERROR',
+        }
     ]
 }
 logger.configure(**logger_config)
