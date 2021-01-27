@@ -78,10 +78,9 @@ ct8_refresh run
 Program will try to sign-in with all of provided and **enabled** accounts.  
 
 
-
-# Reporting errors
-If you found a bug or encountered an error please open a new ticket. It would be 
-the best if you included the log. To get location of the logs by using:
+# Reporting issues
+If you found a bug or encountered an error please open a new issue. It would be 
+the best if you include log files (the most recent ones). To get location of the logs use:
 ```
 ct8_refresh --debug-path
 ```
