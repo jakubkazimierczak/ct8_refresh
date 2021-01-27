@@ -9,7 +9,8 @@ Features:
 * [x] Manage stored users with ease
 * [x] Disable some users from automatic sign-in
 
-Note: (Obviously) This script won't work for already expired accounts.
+Note: (Obviously) This script won't work for already expired accounts. Also, this script
+doesn't create an account for you. If you need one, go [here and create it](https://www.ct8.pl/offer/create_new_account) before proceeding further.
 
 <sup>1</sup> This doesn't account for user sign-in manually after running the script. 
 
