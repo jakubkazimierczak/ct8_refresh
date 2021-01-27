@@ -1,3 +1,4 @@
+from ct8_refresh import args
 from ct8_refresh.account.model import Account
 from ct8_refresh.account.manager import AccountsManager
 from ct8_refresh.ct8 import CT8
@@ -19,7 +20,10 @@ progress = Progress(
 @logger.catch
 def signin_loop():
     with progress:
-        users = AccountsManager.get_active_accounts()
+        if args.all:
+            users = AccountsManager.get_all_accounts()
+        else:
+            users = AccountsManager.get_active_accounts()
         if not users:
             sys.exit('No active users found. Please configure your users first.')
 

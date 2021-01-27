@@ -53,10 +53,8 @@ def handle_args():
     manager = AccountsManager()
 
     if args.command == 'run':
-        if not args.all:
+        if args.all or not args.all:
             signin_loop()
-        else:
-            raise NotImplementedError('Signing-in to all account is not implemented yet.')
 
     if args.command == 'user':
         if args.add:
