@@ -25,6 +25,8 @@ To install pipx on your system use these commands (on Windows replace `python3` 
 python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 ```
+> Note: If you just installed it, you might need to restart your terminal (or PC if you're on Windows).
+Run `python3 -m pipx ensurepath` again after restart to make sure pipx was installed correctly. 
 
 > See [pipx installation](https://pipxproject.github.io/pipx/installation/) for more details.
 
@@ -33,7 +35,7 @@ To install this package use `pipx install`:
 ```
 pipx install git+https://github.com/jakubkazimierczak/ct8_refresh
 ```
-The package will be globally available as `ct8_refresh` or (`ct8_refresh.exe` on Windows).  
+The package will be globally available as `ct8_refresh` (or `ct8_refresh.exe` on Windows).  
 
 > **Note**: On first run headless Chrome will be downloaded (~150MB) if it is not found on your system. This is a one time operation 
 (and yes, it causes the output to go wild.).
@@ -60,6 +62,9 @@ messages, e.g.:
 
 ## First use
 ### Adding users
+**Note: Your account must be registered in CT8.pl before continuing. This script 
+doesn't create accounts for you!**
+
 First you have to add user that you want to sign-in automatically:
 ```
 ct8_refresh user --add your_username
@@ -75,7 +80,13 @@ After adding all of your users you simply use the command:
 ```
 ct8_refresh run
 ```
-Program will try to sign-in with all of provided and **enabled** accounts.  
+Program will try to sign-in with all of provided and **enabled** accounts.
+> Use `--all` switch to include disabled accounts too.
+### Listing all users
+If you want to view all users, and their expiration dates use:
+```
+ct8_refresh user --show
+```
 
 
 # Reporting issues
