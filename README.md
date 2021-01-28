@@ -1,101 +1,110 @@
+[English version of README](README.en.md)
+
 # CT8 Refresher
-Keep your CT8 account(s) expiration date fresh by running a simple command! 
-The program signs-in to the user panel with provided credentials. This prolongs
-the life of account by 90 days (as stated in CT8 rules).
+**Odświeżaj ważność swoich kont na CT8 jednym prostym poleceniem**!
 
-Features:
-* [x] Automatic sign-in for multiple accounts
-* [x] View expiration dates and remaining days<sup>1</sup> 
-* [x] Manage stored users with ease
-* [x] Disable some users from automatic sign-in
+Ten program loguje się automatycznie do panelu przy użyciu podanych danych. Logowanie
+do usługi panelu przedłuża ważność konta o 90 dni (tak zapisane jest w regulaminie).
 
-Note: (Obviously) This script won't work for already expired accounts. Also, this script
-doesn't create an account for you. If you need one, go [here and create it](https://www.ct8.pl/offer/create_new_account) before proceeding further.
-
-<sup>1</sup> This doesn't account for user sign-in manually after running the script. 
+Uwaga: Ten program wymaga posiadania ważnego i aktywnego konta w hostingu CT8. Program nie zadziała, jeśli 
+Twoje konto już wygasło. Jeśli potrzebujesz konta w CT8, [zarejestruj się](https://www.ct8.pl/offer/create_new_account)
+zanim przejdziesz dalej.
 
 
-# Installation
-# Requirements
-Installation in any of ways below requires you to have 
-[Python 3](https://www.python.org/downloads/) and 
-[pipx](https://pipxproject.github.io/pipx/installation/) installed.
+# Funkcje
+* [x] Automatyczne logowanie do wielu kont
+* [x] Podgląd dat wygaśnięcia kont oraz pozostałych dni do wygaśnięcia<sup>1</sup> 
+* [x] Łatwe zarządzanie kontami użytkowników
+* [x] Logowanie tylko do wybranych kont
 
-To install pipx on your system use these commands (on Windows replace `python3` with `python`):
+<sup>1</sup> Nie uwzględnia to manualnego logowania się przez użytkownika. 
+
+
+# Instalacja
+# Wymagania
+Instalacja w poniżej wymienionych krokach wymaga posiadania zainstalowanego 
+[Python 3](https://www.python.org/downloads/) oraz
+[pipx](https://pipxproject.github.io/pipx/installation/).
+
+Jeśli masz już zainstalowanego Pythona, by zainstalować pipx, wpisz poniższe komendy (jeśli używasz Windowsa zamiast `python3` użyj `python`):
 ```
 python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 ```
-> Note: If you just installed it, you might need to restart your terminal (or PC if you're on Windows).
-Run `python3 -m pipx ensurepath` again after restart to make sure pipx was installed correctly. 
+> Uwaga: Jeśli dopiero co zainstalowałeś pipx, będziesz musiał uruchomić ponownie terminal lub ponownie się zalogować.
+Uruchom polecenie `python3 -m pipx ensurepath` ponownie, by upewnić się, że pipx został zainstalowany poprawnie. 
 
-> See [pipx installation](https://pipxproject.github.io/pipx/installation/) for more details.
+> Zobacz [oficjalny poradnik instalacji pipx](https://pipxproject.github.io/pipx/installation/) by dowiedzieć się więcej.
 
-## Install with pipx (recommended)
-To install this package use `pipx install`:
+## Zainstaluj program z użyciem pipx (zalecana metoda)
+By zainstalować program, użyj polecenia `pipx install`:
 ```
 pipx install git+https://github.com/jakubkazimierczak/ct8_refresh
 ```
-The package will be globally available as `ct8_refresh` (or `ct8_refresh.exe` on Windows).  
+Program będzie globalnie dostępny w terminalu pod nazwą `ct8_refresh` (lub `ct8_refresh.exe` w systemie Windows).  
 
-> **Note**: On first run headless Chrome will be downloaded (~150MB) if it is not found on your system. This is a one time operation.
-> 
 
-## Run without installing
-To run it without installing use `pipx run`:
-```
-pipx run --spec git+https://github.com/jakubkazimierczak/ct8_refresh ct8_refresh
-```
-When using package this way you specify parameters after the `ct8_refresh`. e.g.:
+## Uruchom bez instalacji
+By uruchomić program bez instalacji, użyj `pipx run`:
 ```
 pipx run --spec git+https://github.com/jakubkazimierczak/ct8_refresh ct8_refresh -h
-pipx run --spec git+https://github.com/jakubkazimierczak/ct8_refresh ct8_refresh user --add john_doe
+```
+Jeśli chcesz używać programu w ten sposób komendy dopisujesz na samym końcu polecenia, np.:
+```
+pipx run --spec git+https://github.com/jakubkazimierczak/ct8_refresh ct8_refresh -h
+pipx run --spec git+https://github.com/jakubkazimierczak/ct8_refresh ct8_refresh user --add jan_kowalski
 ```
 
 
-# Usage
-## Usage help
-To get usage help type `ct8_refresh --help`. Program is made of separate commands, 
-described in help message as *positional arguments*. Each of them has separate help 
-messages, e.g.:
-`ct8_refresh run -h`
+# Użycie
+## Wyświetlenie pomocy
+By wyświetlić pomoc dla programu użyj `ct8_refresh --help` (lub `-h`).
 
-## First use
-### Adding users
-**Note: Your account must be registered in CT8.pl before continuing. This script 
-doesn't create accounts for you!**
+Program składa się z osobnych komend, z których każda z nich posiada własną stronę pomocy, np.:
+`ct8_refresh run -h` wyświetli pomoc dla komendy `run`.
 
-First you have to add user that you want to sign-in automatically:
-```
-ct8_refresh user --add your_username
-```
-> You will be prompted for a password - don't worry, it won't show up in the console.
+## Pierwsze użycie
+*To tylko krótki poradnik. Nie przedstawia on wszystkich dostępnych komend. Aby dowiedzieć się więcej o dostępnych
+komendach, skorzystaj z dołączone do programu pomocy (`-h`)*.
+### Dodawanie użytkowników
+**UWAGA: Twoje konto musi być wcześniej zarejestrowane w CT8.pl. Ten skrypt nie tworzy konta za Ciebie!** 
 
-If you have multiple users you can add all of them by typing their logins separated by space:
+Po pierwsze musisz dodać konto, na które chcesz się automatycznie logować:
 ```
-ct8_refresh user --add your_username another_username yet_other_username
+ct8_refresh user --add twoj_login
 ```
-### Running automatic sign-in
-After adding all of your users you simply use the command:
+> Zostaniesz poproszony o hasło — nie martw się, nie pojawi się ono w konsoli.
+
+Jeśli masz kilku użytkowników, możesz dodać ich wszystkich, oddzielając loginy spacjami: 
+```
+ct8_refresh user --add twoj_login twoj_inny_login jeszcze_inny_login
+```
+### Uruchomienie automatycznego logowania
+Po dodaniu wszystkich użytkowników możesz się nimi zalogować, wpisując jedno polecenie: 
 ```
 ct8_refresh run
 ```
-Program will try to sign-in with all of provided and **enabled** accounts.
-> Use `--all` switch to include disabled accounts too.
-### Listing all users
-If you want to view all users, and their expiration dates use:
+Program spróbuje zalogować się na wszystkie dodane i **aktywne** konta.
+> **Uwaga**: Przy pierwszym uruchomieniu zostanie pobrany specjalny Chrome (headless). Wielkość pobierania to około 150 MB.
+### Wyświetlanie użytkowników oraz dat wygaśnięcia kont
+Jeśli chcesz wyświetlić wszystkich użytkowników oraz daty wygaśnięcia kot użyj polecenia:
 ```
 ct8_refresh user --show
 ```
+### Wykluczanie użytkowników z logowania
+Jeśli masz użytkownika, którym nie chcesz się logować, możesz go wyłączyć, zamiast go usuwać:
+```
+ct8_refresh user -d login
+```
 
 
-# Reporting issues
-If you found a bug or encountered an error please open a new issue. It would be 
-the best if you include log files (the most recent ones). To get location of the logs use:
+# Zgłaszanie błędów
+Jeśli trafiłeś na błąd podczas używania tego programu - [zgłoś issue](https://github.com/jakubkazimierczak/ct8_refresh/issues/new/choose).
+Byłoby dobrze, jeśli do problemu dołączyłbyś logi używania programu. Aby dowiedzieć się, gdzie przechowywane są logi, użyj polecenia:
 ```
 ct8_refresh --debug-path
 ```
 
 
-# Known issues
-* When using debug mode log path is printed twice.
+# Znane problemy
+* Gdy używany jest debug mode, ścieżka logów jest wypisywana podwójnie.
