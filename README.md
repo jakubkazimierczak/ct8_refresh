@@ -38,8 +38,7 @@ pipx install git+https://github.com/jakubkazimierczak/ct8_refresh
 ```
 The package will be globally available as `ct8_refresh` (or `ct8_refresh.exe` on Windows).  
 
-> **Note**: On first run headless Chrome will be downloaded (~150MB) if it is not found on your system. This is a one time operation 
-(and yes, it causes the output to go wild.).
+> **Note**: On first run headless Chrome will be downloaded (~150MB) if it is not found on your system. This is a one time operation.
 > 
 
 ## Run without installing
