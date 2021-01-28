@@ -2,6 +2,7 @@ from ct8_refresh import args, console
 from ct8_refresh.account.model import Account
 from ct8_refresh.account.manager import AccountsManager
 from ct8_refresh.ct8 import CT8
+from ct8_refresh.ct8_pyppeteer import download_chromium
 from pyppeteer import chromium_downloader
 import sys
 from loguru import logger
@@ -57,6 +58,6 @@ class Run:
             if not Confirm.ask('Download and continue'):
                 sys.exit('Script terminated - headless Chromium is necessary to run the script.')
 
-            chromium_downloader.download_chromium()
+            download_chromium()
 
         Run.signin_loop()

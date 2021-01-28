@@ -20,7 +20,7 @@ setup(
     ],
     packages=find_packages(),
     include_package_data=True,
-    install_requires=["requests-html", "loguru", "rich", "peewee", "pyppeteer"],
+    install_requires=["requests-html", "loguru", "rich", "peewee"],
     entry_points={
         "console_scripts": [
             "ct8_refresh=ct8_refresh.__init__:main",
