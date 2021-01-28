@@ -8,6 +8,7 @@ requests-html = "*"
 loguru = "*"
 rich = "*"
 peewee = "*"
+pyppeteer = "*"
 
 [dev-packages]
 

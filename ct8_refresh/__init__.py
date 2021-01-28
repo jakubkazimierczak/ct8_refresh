@@ -51,7 +51,7 @@ console = Console()
 
 from ct8_refresh.account.manager import AccountsManager
 from ct8_refresh.account.views import AccountsView
-from ct8_refresh.signin_loop import signin_loop
+from ct8_refresh.run import Run
 
 
 def handle_args():
@@ -67,7 +67,7 @@ def handle_args():
 
     if args.command == 'run':
         if args.all or not args.all:
-            signin_loop()
+            Run.main()
 
     if args.command == 'user':
         if args.add:
