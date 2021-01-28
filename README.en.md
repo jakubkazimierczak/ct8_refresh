@@ -94,11 +94,15 @@ ct8_refresh user -d login
 
 # Reporting issues
 If you found a bug or encountered an error please open a new issue. It would be 
-the best if you include log files (the most recent ones). To get location of the logs use:
+the best if you included log files. Rerun the program with `--debug` flag enabled:
+```
+ct8_refresh --debug run
+```
+To get location of the logs use:
 ```
 ct8_refresh --debug-path
 ```
 
 
 # Known issues
-* When using debug mode log path is printed twice.
+* When using debug mode, log path is printed twice.

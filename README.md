@@ -99,8 +99,13 @@ ct8_refresh user -d login
 
 
 # Zgłaszanie błędów
-Jeśli trafiłeś na błąd podczas używania tego programu - [zgłoś issue](https://github.com/jakubkazimierczak/ct8_refresh/issues/new/choose).
-Byłoby dobrze, jeśli do problemu dołączyłbyś logi używania programu. Aby dowiedzieć się, gdzie przechowywane są logi, użyj polecenia:
+Jeśli trafiłeś na błąd podczas używania tego programu - [zgłoś issue](https://github.com/jakubkazimierczak/ct8_refresh/issues/new/choose) 
+(by zgłosić issue, musisz posiadać konto w serwisie GitHub). 
+Byłoby dobrze, jeśli do problemu dołączyłbyś logi używania programu. Uruchom program dodając flagę `--debug` np.:
+```
+ct8_refresh --debug run
+```
+Aby dowiedzieć się, gdzie przechowywane są logi, użyj polecenia:
 ```
 ct8_refresh --debug-path
 ```
