@@ -1,4 +1,4 @@
-from ct8_refresh import args, console
+from ct8_refresh import console
 from ct8_refresh.account.model import Account
 from ct8_refresh.account.manager import AccountsManager
 from ct8_refresh.ct8 import CT8
@@ -15,19 +15,21 @@ from rich.progress import (
 
 
 class Run:
-    progress = Progress(
-        "[progress.description]{task.description}",
-        BarColumn(),
-        "{task.completed}/{task.total}",
-    )
+    def __init__(self, all_users):
+        self.all_users = all_users
 
-    @staticmethod
+        self.progress = Progress(
+            "[progress.description]{task.description}",
+            BarColumn(),
+            "{task.completed}/{task.total}",
+        )
+
     @logger.catch
-    def signin_loop():
-        progress = Run.progress
+    def signin_loop(self):
+        progress = self.progress
 
         with progress:
-            if args.all:
+            if self.all_users:
                 users = AccountsManager.get_all_accounts()
             else:
                 users = AccountsManager.get_active_accounts()
@@ -47,11 +49,8 @@ class Run:
 
             progress.update(task_id, description=':100: Completed!')
 
-    # @logger.catch
-    @staticmethod
     @logger.catch
-    def main():
-        logger.disable('')
+    def main(self):
         if not chromium_downloader.check_chromium():
             print('A headless Chromium needs to be downloaded in order to continue.')
             console.print("The download size is around [yellow]150MB[/yellow]. Proceed?")
@@ -60,4 +59,4 @@ class Run:
 
             download_chromium()
 
-        Run.signin_loop()
+        self.signin_loop()

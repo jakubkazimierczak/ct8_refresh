@@ -87,7 +87,3 @@ user_parser.add_argument(
     action='store_true',
     help='show all accounts stored in DB',
 )
-
-
-# Parse all args
-args = parser.parse_args()
