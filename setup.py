@@ -1,8 +1,9 @@
 import pathlib
+
 from setuptools import setup, find_packages
 
 HERE = pathlib.Path(__file__).parent
-README = (HERE / "README.md").read_text()
+README = (HERE / "README.md").read_text(encoding='UTF-8')
 
 setup(
     name="ct8_refresh",
@@ -23,7 +24,7 @@ setup(
     install_requires=["requests-html", "loguru", "rich", "peewee"],
     entry_points={
         "console_scripts": [
-            "ct8_refresh=ct8_refresh.__init__:main",
+            "ct8_refresh = ct8_refresh.__main__:main",
         ]
-    }
+    },
 )
