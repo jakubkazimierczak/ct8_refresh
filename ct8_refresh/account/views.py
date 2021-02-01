@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from rich.table import Table
 
 from ct8_refresh import console
@@ -8,17 +6,6 @@ from ct8_refresh.account.model import Account
 
 
 class AccountsView:
-    @staticmethod
-    def get_row_style(days_remaining):
-        if days_remaining < 30:
-            return 'red'
-        elif days_remaining < 60:
-            return 'yellow'
-        elif days_remaining < 90:
-            return 'green'
-        else:
-            return None
-
     @staticmethod
     def show_accounts():
         table = Table(title='Users')
@@ -30,13 +17,6 @@ class AccountsView:
         accounts = AccountsManager.get_all_accounts().order_by(Account.is_active.desc(), Account.expires_on)
         account: Account
         for account in accounts:
-            # Calculate expiration date
-            expires_in, style = '', None
-            if account.expires_on:
-                expires_in = datetime.fromisoformat(str(account.expires_on)) - datetime.today()
-                style = AccountsView.get_row_style(expires_in.days)
-                expires_in = str(expires_in.days)
-
-            table.add_row(account.name, str(account.is_active), str(account.expires_on)[:-7], str(expires_in), style=style)
+            table.add_row(account.name, str(account.is_active), account.expire_date, str(account.expires_in), style=account.row_style)
 
         console.print(table)
