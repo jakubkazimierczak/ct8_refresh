@@ -1,7 +1,9 @@
+from datetime import datetime, timedelta
+
 from loguru import logger
 from requests_html import HTMLSession
-from ct8_refresh.account.manager import AccountsManager
-from datetime import datetime, timedelta
+
+from .account.manager import AccountsManager
 
 
 class CT8:

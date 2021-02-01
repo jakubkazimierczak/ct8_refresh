@@ -1,10 +1,11 @@
-from rich.prompt import Prompt
-from ct8_refresh import console
-from loguru import logger
-from peewee import OperationalError, IntegrityError
-from ct8_refresh.account.model import Account
 from functools import partial
 
+from loguru import logger
+from peewee import OperationalError, IntegrityError
+from rich.prompt import Prompt
+
+from ct8_refresh import console
+from ct8_refresh.account.model import Account
 
 print_success = partial(console.print, style='green')
 print_warning = partial(console.print, style='yellow')

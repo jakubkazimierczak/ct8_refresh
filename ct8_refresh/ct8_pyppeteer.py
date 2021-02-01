@@ -1,7 +1,9 @@
-from pyppeteer import chromium_downloader
-from pyppeteer.chromium_downloader import logger as pyppeteer_logger
-from pyppeteer.chromium_downloader import DOWNLOADS_FOLDER, REVISION
+from io import BytesIO
+
 import urllib3
+from pyppeteer import chromium_downloader
+from pyppeteer.chromium_downloader import DOWNLOADS_FOLDER, REVISION
+from pyppeteer.chromium_downloader import logger as pyppeteer_logger
 from rich.progress import (
     BarColumn,
     DownloadColumn,
@@ -10,7 +12,6 @@ from rich.progress import (
     TimeRemainingColumn,
     Progress,
 )
-from io import BytesIO
 
 
 def download_chromium():

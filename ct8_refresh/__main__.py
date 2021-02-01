@@ -1,6 +1,7 @@
 import sys
 
 from .cli import parser
+
 args = parser.parse_args()
 
 from loguru import logger

@@ -1,8 +1,10 @@
-from ct8_refresh.account.model import Account
-from ct8_refresh.account.manager import AccountsManager
-from ct8_refresh import console
-from rich.table import Table
 from datetime import datetime
+
+from rich.table import Table
+
+from ct8_refresh import console
+from ct8_refresh.account.manager import AccountsManager
+from ct8_refresh.account.model import Account
 
 
 class AccountsView:

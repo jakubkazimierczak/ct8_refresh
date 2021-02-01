@@ -1,17 +1,19 @@
-from ct8_refresh import console
-from ct8_refresh.account.model import Account
-from ct8_refresh.account.manager import AccountsManager
-from ct8_refresh.ct8 import CT8
-from ct8_refresh.ct8_pyppeteer import download_chromium
-from pyppeteer import chromium_downloader
 import sys
+
 from loguru import logger
-from rich.prompt import Confirm
+from pyppeteer import chromium_downloader
 from rich import print
 from rich.progress import (
     BarColumn,
     Progress
 )
+from rich.prompt import Confirm
+
+from . import console
+from .account.manager import AccountsManager
+from .account.model import Account
+from .ct8 import CT8
+from .ct8_pyppeteer import download_chromium
 
 
 class Run:

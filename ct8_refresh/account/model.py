@@ -1,7 +1,4 @@
 from loguru import logger
-
-from ct8_refresh import DATABASE_PATH
-
 from peewee import (
     Model,
     SqliteDatabase,
@@ -10,6 +7,7 @@ from peewee import (
     DateTimeField,
 )
 
+from ct8_refresh import DATABASE_PATH
 
 logger.debug('Database path: {}'.format(DATABASE_PATH))
 database = SqliteDatabase(DATABASE_PATH)
