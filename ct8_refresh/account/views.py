@@ -14,9 +14,17 @@ class AccountsView:
         table.add_column('Expires on')
         table.add_column('Remaining days')
 
-        accounts = AccountsManager.get_all_accounts().order_by(Account.is_active.desc(), Account.expires_on)
+        accounts = AccountsManager.get_all_accounts().order_by(
+            Account.is_active.desc(), Account.expires_on
+        )
         account: Account
         for account in accounts:
-            table.add_row(account.name, str(account.is_active), account.expire_date, str(account.expires_in), style=account.row_style)
+            table.add_row(
+                account.name,
+                str(account.is_active),
+                account.expire_date,
+                str(account.expires_in),
+                style=account.row_style,
+            )
 
         console.print(table)

@@ -30,17 +30,19 @@ def download_chromium():
             total_length = 0
 
         progress = Progress(
-            TextColumn("[bold blue]{task.fields[filename]}", justify="right"),
+            TextColumn('[bold blue]{task.fields[filename]}', justify='right'),
             BarColumn(bar_width=None),
-            "•",
+            '•',
             DownloadColumn(),
-            "•",
+            '•',
             TransferSpeedColumn(),
-            "•",
+            '•',
             TimeRemainingColumn(),
         )
 
-        task_id = progress.add_task('Chromium download', filename=filename, total=total_length, start=True)
+        task_id = progress.add_task(
+            'Chromium download', filename=filename, total=total_length, start=True
+        )
 
         with progress:
             # 10 * 1024

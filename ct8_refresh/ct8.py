@@ -33,7 +33,7 @@ class CT8:
             'Cookie': f'csrftoken={csrf_token}',
             'Upgrade-Insecure-Requests': '1',
             'Pragma': 'no-cache',
-            'Cache-Control': 'no-cache'
+            'Cache-Control': 'no-cache',
         }
 
     def sign_in(self):
@@ -46,7 +46,7 @@ class CT8:
         login_data = {
             'csrfmiddlewaretoken': csrf_token,
             'username': self.username,
-            'password': self.password
+            'password': self.password,
         }
 
         # Sign-in
@@ -61,9 +61,14 @@ class CT8:
             if self._console:
                 self._console.print(f':heavy_check_mark: Signed in as {self.username}')
         else:
-            logger.warning('Login failed for {}. Check the login credentials and try again.', self.username)
+            logger.warning(
+                'Login failed for {}. Check the login credentials and try again.',
+                self.username,
+            )
             if self._console:
-                self._console.print(f':x: Login failed for {self.username}. Check the login credentials and try again.')
+                self._console.print(
+                    f':x: Login failed for {self.username}. Check the login credentials and try again.'
+                )
 
     def get_expiration_date(self):
         if not self.signed_in:

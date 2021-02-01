@@ -21,7 +21,9 @@ class AccountsManager:
     @staticmethod
     def add(account_name):
         if AccountsManager._exists(account_name):
-            console.print(f'Cannot add {account_name} - account exists in DB.', style='bright_red')
+            console.print(
+                f'Cannot add {account_name} - account exists in DB.', style='bright_red'
+            )
             return
 
         password = Prompt.ask(f'{account_name} password', password=True)
@@ -49,10 +51,9 @@ class AccountsManager:
         operation = 'enable' if value else 'disable'
 
         try:
-            Account \
-                .update({Account.is_active: value}) \
-                .where(Account.name == account_name) \
-                .execute()
+            Account.update({Account.is_active: value}).where(
+                Account.name == account_name
+            ).execute()
             print_success(f'Account {operation}d (automatic sign-in {operation}d).')
         except (OperationalError, IntegrityError) as err:
             logger.error(err)
@@ -61,10 +62,9 @@ class AccountsManager:
     @staticmethod
     def update_expiration_date(account_name, date):
         try:
-            Account \
-                .update({Account.expires_on: date}) \
-                .where(Account.name == account_name) \
-                .execute()
+            Account.update({Account.expires_on: date}).where(
+                Account.name == account_name
+            ).execute()
             # print_success(f'Account {operation}d (automatic sign-in {operation}d).')
         except (OperationalError, IntegrityError) as err:
             logger.error(err)

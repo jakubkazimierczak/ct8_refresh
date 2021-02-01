@@ -6,6 +6,7 @@ args = parser.parse_args()
 
 from loguru import logger
 from .loggers import Loggers
+
 Loggers(args.debug)
 
 from . import LOG_PATH

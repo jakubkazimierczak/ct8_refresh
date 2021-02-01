@@ -18,9 +18,9 @@ class Run:
         self.all_users = all_users
 
         self.progress = Progress(
-            "[progress.description]{task.description}",
+            '[progress.description]{task.description}',
             BarColumn(),
-            "{task.completed}/{task.total}",
+            '{task.completed}/{task.total}',
         )
 
     @logger.catch
@@ -31,31 +31,31 @@ class Run:
             else:
                 users = AccountsManager.get_active_accounts()
             if not users:
-                sys.exit("No active users found. Please configure your users first.")
+                sys.exit('No active users found. Please configure your users first.')
 
-            task_id = self.progress.add_task("signin_check", total=len(users))
+            task_id = self.progress.add_task('signin_check', total=len(users))
             self.progress.start_task(task_id)
 
             user: Account
             for user in users:
-                self.progress.update(task_id, description=f"{user.name}: sign-in...")
+                self.progress.update(task_id, description=f'{user.name}: sign-in...')
 
                 CT8(user.name, user.password, self.progress.console)
 
                 self.progress.advance(task_id)
 
-            self.progress.update(task_id, description=":100: Completed!")
+            self.progress.update(task_id, description=':100: Completed!')
 
     @logger.catch
     def main(self):
         if not chromium_downloader.check_chromium():
-            print("A headless Chromium needs to be downloaded in order to continue.")
+            print('A headless Chromium needs to be downloaded in order to continue.')
             console.print(
-                "The download size is around [yellow]150MB[/yellow]. Proceed?"
+                'The download size is around [yellow]150MB[/yellow]. Proceed?'
             )
-            if not Confirm.ask("Download and continue"):
+            if not Confirm.ask('Download and continue'):
                 sys.exit(
-                    "Script terminated - headless Chromium is necessary to run the script."
+                    'Script terminated - headless Chromium is necessary to run the script.'
                 )
 
             download_chromium()
