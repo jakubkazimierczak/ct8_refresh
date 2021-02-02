@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
 
 from loguru import logger
-from requests_html import HTMLSession
+from requests import Session
 
 from .account.manager import AccountsManager
+from .constants import SIGNIN_URL
 
 
 class CT8:
@@ -11,13 +12,11 @@ class CT8:
         self.username = username
         self.password = password
         self.signed_in = False
-        self.session = HTMLSession()
+        self.session = Session()
         self._console = progress_console
 
-        self.sign_in()
-
     @staticmethod
-    def _headers(csrf_token):
+    def _prepare_header(csrf_token):
         return {
             'Host': 'panel.ct8.pl',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36 Edg/88.0.705.50',
@@ -36,13 +35,11 @@ class CT8:
             'Cache-Control': 'no-cache',
         }
 
-    def sign_in(self):
-        url = 'https://panel.ct8.pl/login/'
-        r = self.session.get(url)
-        r.html.render()
+    def _send_sign_in_request(self):
+        self.session.get(SIGNIN_URL)
         csrf_token = self.session.cookies.get('csrftoken')
 
-        headers = self._headers(csrf_token)
+        headers = self._prepare_header(csrf_token)
         login_data = {
             'csrfmiddlewaretoken': csrf_token,
             'username': self.username,
@@ -50,8 +47,9 @@ class CT8:
         }
 
         # Sign-in
-        r = self.session.post(url, data=login_data, headers=headers)
+        return self.session.post(SIGNIN_URL, data=login_data, headers=headers)
 
+    def _handle_sign_in(self, r):
         # Successful sign-in
         if len(r.history) and r.history[0].status_code == 302:
             self.signed_in = True
@@ -70,10 +68,9 @@ class CT8:
                     f':x: Login failed for {self.username}. Check the login credentials and try again.'
                 )
 
-    def get_expiration_date(self):
-        if not self.signed_in:
-            logger.error('User must be signed in to perform this action')
-            return
+    def sign_in(self):
+        r = self._send_sign_in_request()
+        self._handle_sign_in(r)
 
         # Get account expiration date
         r = self.session.get('https://panel.ct8.pl/dashboard')
