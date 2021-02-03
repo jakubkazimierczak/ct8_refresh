@@ -35,7 +35,7 @@ class CT8:
             'Cache-Control': 'no-cache',
         }
 
-    def _send_sign_in_request(self):
+    def sign_in_request(self):
         self.session.get(SIGNIN_URL)
         csrf_token = self.session.cookies.get('csrftoken')
 
@@ -47,15 +47,14 @@ class CT8:
         }
 
         # Sign-in
-        return self.session.post(SIGNIN_URL, data=login_data, headers=headers)
-
-    def _handle_sign_in(self, r):
-        # Successful sign-in
-        if len(r.history) and r.history[0].status_code == 302:
+        res = self.session.post(
+            SIGNIN_URL, data=login_data, headers=headers, allow_redirects=False
+        )
+        if res.status_code == 302:
+            if res.next:
+                self.session.send(res.next)
             self.signed_in = True
             logger.debug('Signed in as {}', self.username)
-            expires_on = datetime.today() + timedelta(days=90)
-            AccountsManager.update_expiration_date(self.username, expires_on)
             if self._console:
                 self._console.print(f':heavy_check_mark: Signed in as {self.username}')
         else:
@@ -68,19 +67,11 @@ class CT8:
                     f':x: Login failed for {self.username}. Check the login credentials and try again.'
                 )
 
+    def update_expiration_date(self):
+        if self.signed_in:
+            expires_on = datetime.today() + timedelta(days=90)
+            AccountsManager.update_expiration_date(self.username, expires_on)
+
     def sign_in(self):
-        r = self._send_sign_in_request()
-        self._handle_sign_in(r)
-
-        # Get account expiration date
-        r = self.session.get('https://panel.ct8.pl/dashboard')
-        if r.status_code == 200:
-            if 'Konto ważne do' in r.text or 'Expiration date' in r.text:
-                expires_on = r.html.find('.well', first=True).text.split('\n')[-1]
-
-                logger.debug('Expiration date found on page')
-                logger.info('{} expires on {}', self.username, expires_on)
-
-                return expires_on
-        else:
-            logger.warning('Could not query account info')
+        self.sign_in_request()
+        self.update_expiration_date()
