@@ -4,13 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-requests-html = "*"
+requests = "*"
 loguru = "*"
 rich = "*"
 peewee = "*"
 pyppeteer = "*"
 
 [dev-packages]
+pytest = "*"
+pytest-mock = "*"
+requests-mock = "*"
 pre-commit = "*"
 
 [requires]
