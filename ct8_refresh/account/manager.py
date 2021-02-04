@@ -29,28 +29,46 @@ def catcher(operation='Operation'):
     return decorator
 
 
+def require_account(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except DoesNotExist as err:
+            logger.error(err)
+            print_error(f'Account {args[0]} does not exists.')
+
+    return inner
+
+
 class AccountsManager:
     @staticmethod
+    def exists(account_name):
+        try:
+            Account.get(Account.name == account_name)
+            return True
+        except DoesNotExist:
+            return False
+
+    @staticmethod
     @catcher('Getting account')
-    def get_account(account_name):
+    def get_account(account_name) -> Account:
         return Account.get(Account.name == account_name)
 
     @staticmethod
     @catcher('Add')
     def add(account_name, password=None):
-        if AccountsManager.get_account(account_name):
-            console.print(
-                f'Cannot add {account_name} - account exists in DB.', style='bright_red'
-            )
+        if AccountsManager.exists(account_name):
+            print_error(f'Cannot add {account_name} - account exists in DB.')
             return
 
         if not (password := password):
             password = Prompt.ask(f'{account_name} password', password=True)
         Account.create(name=account_name, password=password)
-        print_success('Account added.')
+        print_success(f'Account {account_name} added.')
 
     @staticmethod
     @catcher('Delete')
+    @require_account
     def delete(account_name):
         deleted = Account.delete().where(Account.name == account_name).execute()
         if deleted:
@@ -84,3 +102,7 @@ class AccountsManager:
     @catcher('Getting all active accounts')
     def get_active_accounts():
         return Account.select().where(Account.is_active)
+
+
+if __name__ == '__main__':
+    AccountsManager.delete('1')
