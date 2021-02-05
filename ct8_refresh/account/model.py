@@ -44,10 +44,8 @@ class Account(Model):
             return 'red'
         elif days_remaining < 60:
             return 'yellow'
-        elif days_remaining < 90:
+        else:  # days_remaining < 90
             return 'green'
-        else:
-            return None
 
 
 def create_tables():
