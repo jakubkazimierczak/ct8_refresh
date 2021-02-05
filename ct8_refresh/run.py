@@ -35,8 +35,10 @@ class Run:
             for user in users:
                 self.progress.update(task_id, description=f'{user.name}: sign-in...')
 
-                ct8_user = CT8(user.name, user.password, self.progress.console)
-                ct8_user.sign_in()
+                ct8_user = CT8(user.name, user.password)
+                result = ct8_user.sign_in_request()
+                ct8_user.update_expiration_date()
+                self.progress.console.print(result)
 
                 self.progress.advance(task_id)
 

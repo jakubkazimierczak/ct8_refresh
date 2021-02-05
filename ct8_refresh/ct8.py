@@ -3,17 +3,16 @@ from datetime import datetime, timedelta
 from loguru import logger
 from requests import Session
 
-from .account.manager import AccountsManager
-from .constants import SIGNIN_URL
+from ct8_refresh.account.manager import AccountsManager
+from ct8_refresh.constants import SIGNIN_URL
 
 
 class CT8:
-    def __init__(self, username, password, progress_console=None):
+    def __init__(self, username, password):
         self.username = username
         self.password = password
         self.signed_in = False
         self.session = Session()
-        self._console = progress_console
 
     @staticmethod
     def _prepare_header(csrf_token):
@@ -54,24 +53,17 @@ class CT8:
             if res.next:
                 self.session.send(res.next)
             self.signed_in = True
+
             logger.debug('Signed in as {}', self.username)
-            if self._console:
-                self._console.print(f':heavy_check_mark: Signed in as {self.username}')
+            return f':heavy_check_mark: Signed in as {self.username}'
         else:
             logger.warning(
                 'Login failed for {}. Check the login credentials and try again.',
                 self.username,
             )
-            if self._console:
-                self._console.print(
-                    f':x: Login failed for {self.username}. Check the login credentials and try again.'
-                )
+            return f':x: Login failed for {self.username}. Check the login credentials and try again.'
 
     def update_expiration_date(self):
         if self.signed_in:
             expires_on = datetime.today() + timedelta(days=90)
             AccountsManager.update_expiration_date(self.username, expires_on)
-
-    def sign_in(self):
-        self.sign_in_request()
-        self.update_expiration_date()
