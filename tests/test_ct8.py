@@ -1,3 +1,5 @@
+import uuid
+
 import pytest
 import requests
 import requests_mock as rm_module
@@ -44,3 +46,9 @@ def test_update_expiration_date(ct8_account, mocker: MockerFixture):
     ct8_account.update_expiration_date()
 
     assert m.call_count == 1
+
+
+def test__prepare_header(ct8_account):
+    token = str(uuid.uuid4())
+    header = ct8_account._prepare_header(token)
+    assert f'csrftoken={token}' in header.values()
