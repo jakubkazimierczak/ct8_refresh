@@ -16,7 +16,7 @@ class Loggers:
             self.add_file_logger(level='DEBUG')
         else:
             self.add_file_logger()
-        self.add_stderr()
+        self.add_stderr_logger()
 
     def add_file_logger(self, level='ERROR'):
         self.file_handler_id = logger.add(
@@ -26,7 +26,7 @@ class Loggers:
         )
         return self.file_handler_id
 
-    def add_stderr(self, level='WARNING'):
+    def add_stderr_logger(self, level='WARNING'):
         self.stderr_handler_id = logger.add(
             sys.stderr,
             format='<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | '
