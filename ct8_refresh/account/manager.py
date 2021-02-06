@@ -99,10 +99,13 @@ class AccountsManager:
         return Account.select()
 
     @staticmethod
+    @catcher('Getting all accounts (sorted)')
+    def get_all_accounts_sorted():
+        return AccountsManager.get_all_accounts().order_by(
+            Account.is_active.desc(), Account.expires_on
+        )
+
+    @staticmethod
     @catcher('Getting all active accounts')
     def get_active_accounts():
         return Account.select().where(Account.is_active)
-
-
-if __name__ == '__main__':
-    AccountsManager.delete('1')
