@@ -16,6 +16,7 @@ pytest-mock = "*"
 requests-mock = "*"
 pre-commit = "*"
 pytest-cov = "*"
+pytest-freezegun = "*"
 
 [requires]
 python_version = "3.8"
