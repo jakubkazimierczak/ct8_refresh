@@ -20,14 +20,17 @@ class Account(Model):
     name = CharField(primary_key=True)
     password = CharField()
     is_active = BooleanField(default=True)
-    expires_on = DateTimeField(null=True)
+    expires_on: datetime = DateTimeField(null=True)
 
     class Meta:
         database = database
 
     @property
     def expire_date(self) -> str:
-        return str(self.expires_on)[:-7]
+        if self.expires_on:
+            return self.expires_on.strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            return ''
 
     @property
     def expires_in(self) -> int:
