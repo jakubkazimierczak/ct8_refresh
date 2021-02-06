@@ -38,7 +38,8 @@ def handle_args():
                 AccountsManager.set_active(account, False)
 
         if args.show_accounts:
-            AccountsView.show_accounts()
+            accounts = AccountsManager.get_all_accounts_sorted()
+            AccountsView.show_accounts(accounts)
 
 
 @logger.catch
