@@ -5,7 +5,7 @@ import pytest
 from ct8_refresh.account.model import Account
 
 
-@pytest.fixture()
+@pytest.fixture
 def account() -> Account:
     expires_on = datetime.today() + timedelta(days=90)
     return Account(
