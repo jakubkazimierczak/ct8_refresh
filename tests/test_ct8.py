@@ -1,7 +1,6 @@
 import uuid
 
 import pytest
-import requests
 import requests_mock as rm_module
 from loguru import logger
 from pytest_mock import MockerFixture
@@ -17,11 +16,11 @@ def ct8_account():
     return CT8(username='john', password='password123')
 
 
-def test_ct8_login_page_200_response():
-    request = requests.get('https://panel.ct8.pl/login/')
-
-    assert request.status_code == 200
-    assert not len(request.history)  # no redirect has happened
+# def test_ct8_login_page_200_response():
+#     request = requests.get('https://panel.ct8.pl/login/')
+#
+#     assert request.status_code == 200
+#     assert not len(request.history)  # no redirect has happened
 
 
 def test_sign_in_request(ct8_account):
