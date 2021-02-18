@@ -16,7 +16,7 @@ def catcher(operation='Operation'):
     def decorator(func):
         def inner(*args, **kwargs):
             try:
-                return func(*args, *kwargs)
+                return func(*args, **kwargs)
             except DoesNotExist as err:
                 logger.error(err)
                 print_error(f"{operation} failed: Account {args[0]} does not exists")
